@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">ChannelMessaging</string>
+    <string name="action_settings">Settings</string>
+    <string name="tv_id">Identifiant</string>
+    <string name="tv_password">Mot de passe</string>
+    <string name="btn_connexion">Connexion</string>
+</resources>
