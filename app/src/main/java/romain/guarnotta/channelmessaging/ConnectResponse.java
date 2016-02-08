@@ -8,6 +8,8 @@ public class ConnectResponse {
     private String code = "";
     private String accesstoken = "";
 
+    ConnectResponse(){}
+
     public String getResponse() {
         return response;
     }
@@ -18,9 +20,5 @@ public class ConnectResponse {
 
     public String getAccesstoken() {
         return accesstoken;
-    }
-
-    ConnectResponse(){
-
     }
 }

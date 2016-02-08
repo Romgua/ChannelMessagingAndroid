@@ -1,15 +1,14 @@
 package romain.guarnotta.channelmessaging;
 
 import android.app.Activity;
-import android.content.SharedPreferences;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-
+import java.net.ConnectException;
 import java.util.HashMap;
 
 public class LoginActivity extends Activity implements View.OnClickListener, RequestListener {
@@ -37,35 +36,28 @@ public class LoginActivity extends Activity implements View.OnClickListener, Req
         ConnexionAsync conn = new ConnexionAsync(method, params);
         conn.setRequestListener(this);
         conn.execute();
-
     }
 
-    private void stockAccessTokenToPrefsFile(String response) {
-        String PREFS_NAME = "MyPrefsFile";
-
-        Gson gson = new Gson();
-        ConnectResponse connectionResponse = gson.fromJson(response, ConnectResponse.class);
-
-        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putString("accesstoken", connectionResponse.getAccesstoken());
-
-        // Commit the edits
-        editor.apply();
-
-        Toast.makeText(
-                getApplicationContext(), settings.getString("accesstoken", "error"), Toast.LENGTH_LONG
-        ).show();
+    private void startChannelListActivity(){
+        Intent myChannelListActivity =
+                new Intent(this, ChannelListActivity.class);
+        startActivity(myChannelListActivity);
     }
 
     @Override
     public void onError(String error) {
-        Toast.makeText(getApplicationContext(), "Error connection", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(),
+                "Error connection : "+error, Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onCompleted(String response) {
-        stockAccessTokenToPrefsFile(response);
+        try {
+            ParseGson.stockAccessTokenToPrefsFile(this, response);
+            startChannelListActivity();
+        } catch (ConnectException ex) {
+            onError(ex.getMessage());
+        }
     }
 
 }
