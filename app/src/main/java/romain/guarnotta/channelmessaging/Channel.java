@@ -6,7 +6,7 @@ package romain.guarnotta.channelmessaging;
 public class Channel {
     private int channelID = 0;
     private String name = "";
-    private int connecteusers = 0;
+    private int connectedusers = 0;
 
 
     public int getChannelID() {
@@ -17,7 +17,5 @@ public class Channel {
         return name;
     }
 
-    public int getConnecteusers() {
-        return connecteusers;
-    }
+    public int getConnectedusers() { return connectedusers; }
 }

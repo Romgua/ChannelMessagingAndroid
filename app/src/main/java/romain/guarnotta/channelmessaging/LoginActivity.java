@@ -33,6 +33,7 @@ public class LoginActivity extends Activity implements View.OnClickListener, Req
         HashMap<String, String> params = new HashMap<>();
         params.put("username",et_id.getText().toString());
         params.put("password", et_password.getText().toString());
+
         ConnexionAsync conn = new ConnexionAsync(method, params);
         conn.setRequestListener(this);
         conn.execute();

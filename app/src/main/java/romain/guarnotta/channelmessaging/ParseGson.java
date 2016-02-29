@@ -15,7 +15,6 @@ public class ParseGson<T> {
 
     public static <T> T parseGson(Class<T> myClassObject, String response) {
         Gson gson = new Gson();
-//        T parseJsonResponse = gson.fromJson(response, myClassObject);
 
         return gson.fromJson(response, myClassObject);
     }
