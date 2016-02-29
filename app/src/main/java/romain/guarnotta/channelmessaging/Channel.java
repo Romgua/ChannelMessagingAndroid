@@ -9,13 +9,9 @@ public class Channel {
     private int connectedusers = 0;
 
 
-    public int getChannelID() {
-        return channelID;
-    }
+    public int getChannelID() { return channelID; }
 
-    public String getName() {
-        return name;
-    }
+    public String getName() { return name; }
 
     public int getConnectedusers() { return connectedusers; }
 }

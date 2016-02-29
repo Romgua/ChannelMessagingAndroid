@@ -12,11 +12,11 @@ import java.util.List;
 /**
  * Created by romain on 08/02/16.
  */
-public class ListViewAdapter extends ArrayAdapter<List> {
+public class ListViewAdapterForChannel extends ArrayAdapter<List> {
     private final Context context;
     private final List<Channel> channels;
 
-    public ListViewAdapter(Context context, List channels) {
+    public ListViewAdapterForChannel(Context context, List channels) {
         super(context, R.layout.row_channel, channels);
         this.context = context;
         this.channels = channels;
