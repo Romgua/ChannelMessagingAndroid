@@ -34,7 +34,7 @@ public class ListViewAdapterForChannel extends ArrayAdapter<List> {
         TextView tv_connectusers = (TextView)rowView.findViewById(R.id.tv_connectusers);
         tv_title_channel.setText(channels.get(position).getName());
         tv_connectusers.setText("Nombre d'utilisateurs connectés : "+channels.get(position).getConnectedusers());
-
+        rowView.setTag(channels.get(position));
         return rowView;
     }
 }

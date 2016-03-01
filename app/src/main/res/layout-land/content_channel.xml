@@ -1,19 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    android:id="@+id/ll_channel_list_fragment"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".Activity.ChannelListActivity"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <fragment
         android:id="@+id/channel_list_fragment_id"
         android:name="romain.guarnotta.channelmessaging.Fragment.ChannelListFragment"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
         tools:layout="@layout/channel_list_fragment" />
+
+    <fragment
+        android:id="@+id/message_fragment_id"
+        android:name="romain.guarnotta.channelmessaging.Fragment.MessageFragment"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+        android:layout_gravity="end"
+        tools:layout="@layout/message_fragment" />
 
 </LinearLayout>
