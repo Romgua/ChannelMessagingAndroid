@@ -5,6 +5,7 @@
     <string name="btn_send">Envoyer</string>
     <string name="channel">Channel</string>
     <string name="channel_list">Liste des channels</string>
+    <string name="image_profil">Image</string>
     <string name="tv_id">Identifiant</string>
     <string name="tv_password">Mot de passe</string>
 </resources>
