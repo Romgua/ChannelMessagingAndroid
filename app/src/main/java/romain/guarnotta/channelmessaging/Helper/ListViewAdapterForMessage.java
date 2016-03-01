@@ -1,4 +1,4 @@
-package romain.guarnotta.channelmessaging;
+package romain.guarnotta.channelmessaging.Helper;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,6 +11,9 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+import romain.guarnotta.channelmessaging.Model.Message;
+import romain.guarnotta.channelmessaging.R;
 
 /**
  * Created by romain on 29/02/16.

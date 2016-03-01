@@ -1,4 +1,4 @@
-package romain.guarnotta.channelmessaging;
+package romain.guarnotta.channelmessaging.Model;
 
 /**
  * Created by romain on 08/02/16.

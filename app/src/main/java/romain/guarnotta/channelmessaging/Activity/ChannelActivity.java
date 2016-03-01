@@ -1,4 +1,4 @@
-package romain.guarnotta.channelmessaging;
+package romain.guarnotta.channelmessaging.Activity;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
@@ -11,6 +11,13 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.HashMap;
+
+import romain.guarnotta.channelmessaging.Network_Manager.ConnexionAsync;
+import romain.guarnotta.channelmessaging.Helper.ListViewAdapterForMessage;
+import romain.guarnotta.channelmessaging.Model.MessageResponse;
+import romain.guarnotta.channelmessaging.Network_Manager.ParseGson;
+import romain.guarnotta.channelmessaging.R;
+import romain.guarnotta.channelmessaging.Network_Manager.RequestListener;
 
 /**
  * Created by romain on 08/02/16.

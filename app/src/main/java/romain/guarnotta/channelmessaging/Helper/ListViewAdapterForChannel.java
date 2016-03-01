@@ -1,4 +1,4 @@
-package romain.guarnotta.channelmessaging;
+package romain.guarnotta.channelmessaging.Helper;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,9 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import java.util.List;
+
+import romain.guarnotta.channelmessaging.Model.Channel;
+import romain.guarnotta.channelmessaging.R;
 
 /**
  * Created by romain on 08/02/16.

@@ -1,10 +1,12 @@
-package romain.guarnotta.channelmessaging;
+package romain.guarnotta.channelmessaging.Network_Manager;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import com.google.gson.Gson;
 
 import java.net.ConnectException;
+
+import romain.guarnotta.channelmessaging.Model.ConnectResponse;
 
 /**
  * Created by romain on 08/02/16.

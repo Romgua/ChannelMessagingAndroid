@@ -1,4 +1,4 @@
-package romain.guarnotta.channelmessaging;
+package romain.guarnotta.channelmessaging.Helper;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
