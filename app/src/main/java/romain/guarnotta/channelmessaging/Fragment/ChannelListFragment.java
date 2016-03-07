@@ -38,7 +38,7 @@ public class ChannelListFragment extends Fragment implements RequestListener {
 
         String method = "getchannels";
         HashMap<String, String> params = new HashMap<>();
-        params.put("accesstoken", ParseGson.getAccessTokenByPrefsFile(settings));
+        params.put("accesstoken", ParseGson.getInfoInPrefsFileByKey(settings, "accesstoken"));
 
         ConnexionAsync conn = new ConnexionAsync(method, params);
         conn.setRequestListener(this);

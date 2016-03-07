@@ -1,12 +1,14 @@
 <resources>
     <string name="app_name">ChannelMessaging</string>
+    <string name="action_deco">Log Out</string>
+    <string name="action_infos">Informations</string>
     <string name="action_search">Search</string>
     <string name="action_settings">Settings</string>
-    <string name="btn_connexion">Connexion</string>
-    <string name="btn_send">Envoyer</string>
+    <string name="btn_connexion">Log In</string>
+    <string name="btn_send">Send</string>
     <string name="channel">Channel</string>
-    <string name="channel_list">Liste des channels</string>
+    <string name="channel_list">Channels List</string>
     <string name="image_profil">Image</string>
-    <string name="tv_id">Identifiant</string>
-    <string name="tv_password">Mot de passe</string>
+    <string name="tv_id">Login</string>
+    <string name="tv_password">Password</string>
 </resources>

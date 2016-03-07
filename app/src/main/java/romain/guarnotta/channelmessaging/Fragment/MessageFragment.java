@@ -68,7 +68,7 @@ public class MessageFragment extends Fragment implements View.OnClickListener, R
     private void getMessages() {
         String method = "getmessages";
         HashMap<String, String> params = new HashMap<>();
-        params.put("accesstoken", ParseGson.getAccessTokenByPrefsFile(settings));
+        params.put("accesstoken", ParseGson.getInfoInPrefsFileByKey(settings, "accesstoken"));
         params.put("channelid", ""+sChannelID);
 
         ConnexionAsync conn = new ConnexionAsync(method, params);
@@ -96,7 +96,7 @@ public class MessageFragment extends Fragment implements View.OnClickListener, R
     public void onClick(View v) {
         String method = "sendmessage";
         HashMap<String, String> params = new HashMap<>();
-        params.put("accesstoken", ParseGson.getAccessTokenByPrefsFile(settings));
+        params.put("accesstoken", ParseGson.getInfoInPrefsFileByKey(settings, "accesstoken"));
         params.put("channelid", ""+sChannelID);
         params.put("message", et_message_writting.getText().toString());
 

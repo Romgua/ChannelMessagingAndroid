@@ -14,5 +14,20 @@
         android:orderInCategory="100"
         android:icon="@android:drawable/ic_menu_manage"
         android:title="@string/action_settings"
-        app:showAsAction="always" />
+        app:showAsAction="always">
+        <menu>
+            <item
+                android:id="@+id/action_deco"
+                android:orderInCategory="100"
+                android:icon="@android:drawable/ic_menu_close_clear_cancel"
+                android:title="@string/action_deco"
+                app:showAsAction="always" />
+            <item
+                android:id="@+id/action_infos"
+                android:orderInCategory="100"
+                android:icon="@android:drawable/ic_menu_info_details"
+                android:title="@string/action_infos"
+                app:showAsAction="always" />
+        </menu>
+    </item>
 </menu>

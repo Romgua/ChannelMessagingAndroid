@@ -27,16 +27,30 @@ public class ParseGson<T> {
         if (!connectResponse.getCode().equals("200")) {
             throw new ConnectException();
         }
+
+        stockPreferences(myContext, "accesstoken", connectResponse.getAccesstoken());
+    }
+
+    public static void stockPreferences(Context myContext, String key, String value) {
         SharedPreferences settings = myContext.getSharedPreferences(PREFS_NAME, 0);
         SharedPreferences.Editor editor = settings.edit();
-        editor.putString("accesstoken", connectResponse.getAccesstoken());
+        editor.putString(key, value);
 
         // Commit the edits
         editor.apply();
     }
 
-    public static String getAccessTokenByPrefsFile(SharedPreferences settings) {
-        return settings.getString("accesstoken", "error");
+    public static void removePreferencesByKey(Context myContext, String key) {
+        SharedPreferences settings = myContext.getSharedPreferences(PREFS_NAME, 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.remove(key);
+
+        // Commit the edits
+        editor.apply();
+    }
+
+    public static String getInfoInPrefsFileByKey(SharedPreferences settings, String key) {
+        return settings.getString(key, "error");
     }
 
 }
