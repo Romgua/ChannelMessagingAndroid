@@ -69,7 +69,7 @@ public class ChannelListFragment extends Fragment implements RequestListener {
     @Override
     public void onCompleted(String response) {
         ChannelResponse channelResponse = ParseGson.parseGson(ChannelResponse.class, response);
-
+        ((ChannelListActivity)getActivity()).setDefaultChannel(channelResponse.getChannels().get(0).getChannelID());
         // Attach the adapter to a ListView
         lv_channel_list.setAdapter(new ListViewAdapterForChannel(this.getContext(), channelResponse.getChannels()));
     }

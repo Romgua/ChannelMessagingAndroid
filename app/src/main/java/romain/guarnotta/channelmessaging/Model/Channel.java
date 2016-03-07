@@ -11,6 +11,8 @@ public class Channel {
 
     public int getChannelID() { return channelID; }
 
+    public void setChannelID(int channelID) { this.channelID = channelID; }
+
     public String getName() { return name; }
 
     public int getConnectedusers() { return connectedusers; }
