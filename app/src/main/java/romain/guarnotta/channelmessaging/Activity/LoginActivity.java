@@ -49,10 +49,7 @@ public class LoginActivity extends Activity implements View.OnClickListener, Req
 
     @Override
     public void onClick(View v) {
-        Intent myChannelListActivity =
-                new Intent(this, GPSActivity.class);
-        startActivity(myChannelListActivity);
-//        logIn();
+        logIn();
     }
 
     private void logIn() {
