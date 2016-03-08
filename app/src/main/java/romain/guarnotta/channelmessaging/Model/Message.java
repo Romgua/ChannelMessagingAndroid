@@ -8,6 +8,8 @@ public class Message {
     private String message = "";
     private String date = "";
     private String imageUrl = "";
+    private Double latitude = 0.0;
+    private Double longitude = 0.0;
 
     public int getUserID() { return userID; }
 
@@ -16,4 +18,8 @@ public class Message {
     public String getDate() { return date; }
 
     public String getImageUrl() { return imageUrl; }
+
+    public Double getLatitude() { return latitude; }
+
+    public Double getLongitude() { return longitude; }
 }

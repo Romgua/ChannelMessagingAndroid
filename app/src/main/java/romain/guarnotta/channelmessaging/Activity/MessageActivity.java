@@ -7,7 +7,7 @@ import romain.guarnotta.channelmessaging.R;
 /**
  * Created by romain on 08/02/16.
  */
-public class MessageActivity extends AppCompatActivity {
+public class MessageActivity extends GPSActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -2,8 +2,6 @@ package romain.guarnotta.channelmessaging.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,7 +21,8 @@ import romain.guarnotta.channelmessaging.R;
 /**
  * Created by romain on 08/02/16.
  */
-public class ChannelListActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, OnChannelListFragmentUpdate {
+public class ChannelListActivity extends GPSActivity
+        implements AdapterView.OnItemClickListener, OnChannelListFragmentUpdate {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +89,7 @@ public class ChannelListActivity extends AppCompatActivity implements AdapterVie
             i.putExtra("channelID", channel.getChannelID());
             startActivity(i);
         } else {
-            messageFragment.sChannelID = channel.getChannelID();
+            messageFragment.iChannelID = channel.getChannelID();
             messageFragment.refresh();
         }
     }
@@ -119,7 +118,7 @@ public class ChannelListActivity extends AppCompatActivity implements AdapterVie
     public void setDefaultChannel(int channelID) {
         MessageFragment messageFragment = (MessageFragment)getSupportFragmentManager().findFragmentById(R.id.message_fragment_id);
         if (messageFragment != null && messageFragment.isInLayout()) {
-            messageFragment.sChannelID = channelID;
+            messageFragment.iChannelID = channelID;
             messageFragment.refresh();
         }
     }

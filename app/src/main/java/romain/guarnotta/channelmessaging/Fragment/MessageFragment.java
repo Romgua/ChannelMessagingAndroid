@@ -1,6 +1,7 @@
 package romain.guarnotta.channelmessaging.Fragment;
 
 import android.content.SharedPreferences;
+import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 
 import java.util.HashMap;
 
+import romain.guarnotta.channelmessaging.Activity.GPSActivity;
 import romain.guarnotta.channelmessaging.Helper.ListViewAdapterForMessage;
 import romain.guarnotta.channelmessaging.Model.MessageResponse;
 import romain.guarnotta.channelmessaging.Network_Manager.ConnexionAsync;
@@ -27,9 +29,10 @@ import romain.guarnotta.channelmessaging.R;
 public class MessageFragment extends Fragment implements View.OnClickListener, RequestListener {
 
     private SharedPreferences settings;
-    public int sChannelID;
+    public int iChannelID;
     private ListView lv_channel_messages;
     private EditText et_message_writting;
+    Location mLocation;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -38,7 +41,7 @@ public class MessageFragment extends Fragment implements View.OnClickListener, R
         lv_channel_messages = (ListView)v.findViewById(R.id.lv_channel_messages);
 
         settings = getContext().getSharedPreferences(ParseGson.PREFS_NAME, 0);
-        sChannelID = getActivity().getIntent().getIntExtra("channelID", 0);
+        iChannelID = getActivity().getIntent().getIntExtra("channelID", 0);
 
         final Handler handler = new Handler();
         final Runnable r = new Runnable() {
@@ -69,18 +72,20 @@ public class MessageFragment extends Fragment implements View.OnClickListener, R
         String method = "getmessages";
         HashMap<String, String> params = new HashMap<>();
         params.put("accesstoken", ParseGson.getInfoInPrefsFileByKey(settings, "accesstoken"));
-        params.put("channelid", ""+sChannelID);
+        params.put("channelid", ""+ iChannelID);
 
         ConnexionAsync conn = new ConnexionAsync(method, params);
         conn.setRequestListener(this);
         conn.execute();
     }
 
+    //getMessages
     @Override
     public void onError(String error) {
 
     }
 
+    //getMessages
     @Override
     public void onCompleted(String response) {
         if (response.contains("messages")) {
@@ -92,13 +97,17 @@ public class MessageFragment extends Fragment implements View.OnClickListener, R
         }
     }
 
-    @Override
-    public void onClick(View v) {
+    private void sendMessage() {
         String method = "sendmessage";
         HashMap<String, String> params = new HashMap<>();
         params.put("accesstoken", ParseGson.getInfoInPrefsFileByKey(settings, "accesstoken"));
-        params.put("channelid", ""+sChannelID);
+        params.put("channelid", ""+ iChannelID);
         params.put("message", et_message_writting.getText().toString());
+        mLocation = GPSActivity.getCurrentLocation();
+        if (null != mLocation) {
+            params.put("latitude", ""+mLocation.getLatitude());
+            params.put("longitude", ""+mLocation.getLongitude());
+        }
 
         try {
             ConnexionAsync conn = new ConnexionAsync(method, params);
@@ -107,6 +116,11 @@ public class MessageFragment extends Fragment implements View.OnClickListener, R
         } catch (Exception ex) {
             Toast.makeText(this.getContext(), "Error : " + ex, Toast.LENGTH_LONG).show();
         }
+    }
+
+    @Override
+    public void onClick(View v) {
+        sendMessage();
     }
 
     public void refresh() {
