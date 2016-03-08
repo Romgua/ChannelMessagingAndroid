@@ -9,8 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.HashMap;
+import java.util.List;
 
 import romain.guarnotta.channelmessaging.Activity.ChannelListActivity;
 import romain.guarnotta.channelmessaging.Activity.MessageActivity;
@@ -27,6 +29,8 @@ import romain.guarnotta.channelmessaging.R;
  */
 public class ChannelListFragment extends Fragment implements RequestListener {
     private ListView lv_channel_list;
+    private List<Channel> channels;
+    private ListViewAdapterForChannel mListAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -72,5 +76,14 @@ public class ChannelListFragment extends Fragment implements RequestListener {
         ((ChannelListActivity)getActivity()).setDefaultChannel(channelResponse.getChannels().get(0).getChannelID());
         // Attach the adapter to a ListView
         lv_channel_list.setAdapter(new ListViewAdapterForChannel(this.getContext(), channelResponse.getChannels()));
+    }
+
+    public void searchStringInList(String word) {
+        mListAdapter = (ListViewAdapterForChannel)lv_channel_list.getAdapter();
+        mListAdapter.setFilter(word);
+    }
+
+    public void resetResearchFilter() {
+        mListAdapter.resetResearchFilter();
     }
 }
