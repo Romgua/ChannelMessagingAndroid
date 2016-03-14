@@ -9,6 +9,9 @@
     <string name="channel">Channel</string>
     <string name="channel_list">Channels List</string>
     <string name="image_profil">Image</string>
+    <string name="locate_on_map">Locate it on a map</string>
+    <string name="make_a_choice">Choose an option</string>
     <string name="tv_id">Login</string>
     <string name="tv_password">Password</string>
+    <string name="title_activity_maps">Map</string>
 </resources>

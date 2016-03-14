@@ -119,9 +119,6 @@ public class GPSActivity extends AppCompatActivity
         Location loc = null;
         if (null != mCurrentLocation) {
             loc = mCurrentLocation;
-//            double lat = mCurrentLocation.getLatitude();
-//            double lng = mCurrentLocation.getLongitude();
-//            Toast.makeText(this, ("Latitude  = "+lat+" | Longitude = "+lng), Toast.LENGTH_LONG).show();
         }
 
 
