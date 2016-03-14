@@ -20,7 +20,8 @@ import romain.guarnotta.channelmessaging.Network_Manager.ParseGson;
 import romain.guarnotta.channelmessaging.R;
 import romain.guarnotta.channelmessaging.Network_Manager.RequestListener;
 
-public class LoginActivity extends Activity implements View.OnClickListener, RequestListener {
+public class LoginActivity extends NotificationActivity
+        implements View.OnClickListener, RequestListener {
 
     private static Context context;
     private EditText et_id;
@@ -57,6 +58,7 @@ public class LoginActivity extends Activity implements View.OnClickListener, Req
         HashMap<String, String> params = new HashMap<>();
         params.put("username", et_id.getText().toString());
         params.put("password", et_password.getText().toString());
+        params.put("registrationid", getRegistrationId());
 
         ConnexionAsync conn = new ConnexionAsync(method, params);
         conn.setRequestListener(this);
@@ -67,6 +69,7 @@ public class LoginActivity extends Activity implements View.OnClickListener, Req
         ParseGson.removePreferencesByKey(LoginActivity.getAppContext(), "accesstoken");
         ParseGson.removePreferencesByKey(LoginActivity.getAppContext(), "username");
         ParseGson.removePreferencesByKey(LoginActivity.getAppContext(), "password");
+        ParseGson.removePreferencesByKey(LoginActivity.getAppContext(), "registrationid");
     }
 
     private void startChannelListActivity(){
@@ -87,6 +90,7 @@ public class LoginActivity extends Activity implements View.OnClickListener, Req
             ParseGson.stockAccessTokenToPrefsFile(this, response);
             ParseGson.stockPreferences(this, "username", et_id.getText().toString());
             ParseGson.stockPreferences(this, "password", et_password.getText().toString());
+            ParseGson.stockPreferences(this, "registrationid", getRegistrationId());
             startChannelListActivity();
         } catch (ConnectException ex) {
             onError(ex.getMessage());

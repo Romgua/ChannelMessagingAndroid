@@ -7,6 +7,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -39,10 +40,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        Double dLatitude  = Double.valueOf(getIntent().getStringExtra("latitude"));
+        Double dLongitude = Double.valueOf(getIntent().getStringExtra("longitude"));
+        String sMessage   = getIntent().getStringExtra("message");
 
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        // Add a marker to location and move the camera
+        setMarker(dLatitude, dLongitude, sMessage);
     }
+
+    private void setMarker(Double dLatitude, Double dLongitude, String sMessage) {
+        LatLng position = new LatLng(dLatitude, dLongitude);
+        // Add marker
+        mMap.addMarker(new MarkerOptions()
+                        .position(position)
+                        .title(sMessage)
+        );
+        // Move camera to the position and zoom 14
+        CameraPosition cameraPosition = new CameraPosition(position, 14, 0, 0);
+        mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+    }
+
+
 }

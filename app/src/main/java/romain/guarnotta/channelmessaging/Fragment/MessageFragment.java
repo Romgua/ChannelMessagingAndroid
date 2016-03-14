@@ -1,6 +1,7 @@
 package romain.guarnotta.channelmessaging.Fragment;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
@@ -19,7 +20,9 @@ import android.widget.Toast;
 import java.util.HashMap;
 
 import romain.guarnotta.channelmessaging.Activity.GPSActivity;
+import romain.guarnotta.channelmessaging.Activity.MapsActivity;
 import romain.guarnotta.channelmessaging.Helper.ListViewAdapterForMessage;
+import romain.guarnotta.channelmessaging.Model.Message;
 import romain.guarnotta.channelmessaging.Model.MessageResponse;
 import romain.guarnotta.channelmessaging.Network_Manager.ConnexionAsync;
 import romain.guarnotta.channelmessaging.Network_Manager.ParseGson;
@@ -76,7 +79,7 @@ public class MessageFragment extends Fragment
         String method = "getmessages";
         HashMap<String, String> params = new HashMap<>();
         params.put("accesstoken", ParseGson.getInfoInPrefsFileByKey(settings, "accesstoken"));
-        params.put("channelid", ""+ iChannelID);
+        params.put("channelid", "" + iChannelID);
 
         ConnexionAsync conn = new ConnexionAsync(method, params);
         conn.setRequestListener(this);
@@ -93,12 +96,12 @@ public class MessageFragment extends Fragment
     @Override
     public void onCompleted(String response) {
         if (response.contains("messages")) {
-            MessageResponse messageResponse = ParseGson.parseGson(MessageResponse.class, response);
+            final MessageResponse messageResponse = ParseGson.parseGson(MessageResponse.class, response);
             // Attach the adapter to a ListView
             lv_channel_messages.setAdapter(new ListViewAdapterForMessage(this.getContext(), messageResponse.getMessages()));
             lv_channel_messages.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                     final CharSequence[] items = {
                             getString(R.string.locate_on_map)
                     };
@@ -110,12 +113,10 @@ public class MessageFragment extends Fragment
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     if (0 == which) { // first Item
-                                        Toast.makeText(getContext(), "Map", Toast.LENGTH_LONG).show();
+                                        Message myMessage = messageResponse.getMessages()
+                                                .get(position);
+                                        startMapsActivity(myMessage);
                                     }
-//                                    else {
-                                    //Do some stuff
-                                    // But no other items
-//                                    }
                                 }
                             })
                             .show();
@@ -135,7 +136,7 @@ public class MessageFragment extends Fragment
         mLocation = GPSActivity.getCurrentLocation();
         if (null != mLocation) {
             params.put("latitude", ""+mLocation.getLatitude());
-            params.put("longitude", ""+mLocation.getLongitude());
+            params.put("longitude", "" + mLocation.getLongitude());
         }
 
         try {
@@ -156,5 +157,14 @@ public class MessageFragment extends Fragment
     //this
     public void refresh() {
         this.getMessages();
+    }
+
+    private void startMapsActivity(Message msg){
+        Intent myMapsActivity =
+                new Intent(getContext(), MapsActivity.class);
+        myMapsActivity.putExtra("latitude", msg.getLatitude().toString());
+        myMapsActivity.putExtra("longitude", msg.getLongitude().toString());
+        myMapsActivity.putExtra("message", msg.getMessage());
+        startActivity(myMapsActivity);
     }
 }
