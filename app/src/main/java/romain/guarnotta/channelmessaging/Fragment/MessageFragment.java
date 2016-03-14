@@ -1,7 +1,10 @@
 package romain.guarnotta.channelmessaging.Fragment;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
@@ -40,6 +43,12 @@ public class MessageFragment extends Fragment
     private ListView lv_channel_messages;
     private EditText et_message_writting;
     Location mLocation;
+    BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            refresh();
+        }
+    };
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -61,17 +70,6 @@ public class MessageFragment extends Fragment
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        final Handler handler = new Handler();
-        final Runnable r = new Runnable() {
-            public void run() {
-                getMessages();
-                handler.postDelayed(this, 1000);
-            }
-        };
-
-        handler.postDelayed(r, 1000);
-
         this.getMessages();
     }
 
@@ -159,6 +157,7 @@ public class MessageFragment extends Fragment
         this.getMessages();
     }
 
+    //this
     private void startMapsActivity(Message msg){
         Intent myMapsActivity =
                 new Intent(getContext(), MapsActivity.class);
@@ -166,5 +165,13 @@ public class MessageFragment extends Fragment
         myMapsActivity.putExtra("longitude", msg.getLongitude().toString());
         myMapsActivity.putExtra("message", msg.getMessage());
         startActivity(myMapsActivity);
+    }
+
+    //this
+    @Override
+    public void onResume() {
+        super.onResume();
+        IntentFilter filter = new IntentFilter("com.google.android.c2dm.intent.RECEIVE");
+        getContext().registerReceiver(mMessageReceiver, filter);
     }
 }

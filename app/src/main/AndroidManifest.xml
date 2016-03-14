@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="romain.guarnotta.channelmessaging">
 
-    <permission android:name="my.package.name.permission.C2D_MESSAGE"
+    <permission android:name="romain.guarnotta.channelmessaging.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
     s
     <!-- INTERNET -->
@@ -11,7 +11,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <!-- NOTIFICATION -->
-    <uses-permission android:name="my.package.name.permission.C2D_MESSAGE" />
+    <uses-permission android:name="romain.guarnotta.channelmessaginpermission.C2D_MESSAGE" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
     <application
