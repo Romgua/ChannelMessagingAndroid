@@ -35,8 +35,9 @@ public class ListViewAdapterForMessage extends ArrayAdapter<List> {
         View rowView = inflater.inflate(R.layout.row_message, parent, false);
 
         ImageView iv_image_profil = (ImageView)rowView.findViewById(R.id.iv_image_profil);
-        TextView tv_message = (TextView)rowView.findViewById(R.id.tv_message);
-        TextView tv_date = (TextView)rowView.findViewById(R.id.tv_date);
+        TextView tv_username      = (TextView)rowView.findViewById(R.id.tv_username);
+        TextView tv_message       = (TextView)rowView.findViewById(R.id.tv_message);
+        TextView tv_date          = (TextView)rowView.findViewById(R.id.tv_date);
 
 //        new CircleTransformation(iv_image_profil, messages.get(position).getImageUrl()).execute();
         Picasso
@@ -44,6 +45,8 @@ public class ListViewAdapterForMessage extends ArrayAdapter<List> {
                 .load(messages.get(position).getImageUrl())
                 .transform(new CircleTransformation())
                 .into(iv_image_profil);
+        String username = messages.get(position).getUsername()+" : ";
+        tv_username.setText(username);
         tv_message.setText(messages.get(position).getMessage());
         tv_date.setText(messages.get(position).getDate());
 

@@ -2,9 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="romain.guarnotta.channelmessaging">
 
-    <permission android:name="romain.guarnotta.channelmessaging.permission.C2D_MESSAGE"
+    <permission
+        android:name="romain.guarnotta.channelmessaging.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
-    s
+
     <!-- INTERNET -->
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- MAP -->
@@ -33,12 +34,12 @@
             android:name=".Activity.ChannelListActivity"
             android:label="@string/channel_list"
             android:parentActivityName=".Activity.LoginActivity"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".Activity.MessageActivity"
             android:label="@string/channel"
             android:parentActivityName=".Activity.ChannelListActivity"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -53,7 +54,17 @@
 
         <activity
             android:name=".Activity.MapsActivity"
-            android:label="@string/title_activity_maps"></activity>
+            android:label="@string/title_activity_maps" />
+
+        <receiver
+            android:name=".Activity.GCMBroadcastReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter android:priority="0">
+                <action android:name = "com.google.android.c2dm.intent.RECEIVE"/>
+                <category android:name = "my.package.name.android"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

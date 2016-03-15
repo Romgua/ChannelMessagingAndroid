@@ -42,18 +42,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
         Double dLatitude  = Double.valueOf(getIntent().getStringExtra("latitude"));
         Double dLongitude = Double.valueOf(getIntent().getStringExtra("longitude"));
+        String sUsername  = getIntent().getStringExtra("username");
         String sMessage   = getIntent().getStringExtra("message");
 
         // Add a marker to location and move the camera
-        setMarker(dLatitude, dLongitude, sMessage);
+        setMarker(dLatitude, dLongitude, sUsername, sMessage);
     }
 
-    private void setMarker(Double dLatitude, Double dLongitude, String sMessage) {
+    private void setMarker(Double dLatitude, Double dLongitude, String sUsername, String sMessage) {
         LatLng position = new LatLng(dLatitude, dLongitude);
         // Add marker
         mMap.addMarker(new MarkerOptions()
                         .position(position)
-                        .title(sMessage)
+                        .title(sUsername)
+                        .snippet(sMessage)
         );
         // Move camera to the position and zoom 14
         CameraPosition cameraPosition = new CameraPosition(position, 14, 0, 0);

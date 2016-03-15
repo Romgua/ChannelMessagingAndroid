@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +21,10 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import org.json.JSONException;
+
 import java.util.HashMap;
+import java.util.Set;
 
 import romain.guarnotta.channelmessaging.Activity.GPSActivity;
 import romain.guarnotta.channelmessaging.Activity.MapsActivity;
@@ -39,14 +43,20 @@ public class MessageFragment extends Fragment
         implements View.OnClickListener, RequestListener {
 
     private SharedPreferences settings;
-    public int iChannelID;
+    public int iChannelID = 0;
     private ListView lv_channel_messages;
     private EditText et_message_writting;
     Location mLocation;
     BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            refresh();
+            abortBroadcast();
+            Set<String> list = intent.getExtras().keySet();
+
+            String sChannelID = intent.getStringExtra("channelid");
+            if (sChannelID.equals(String.valueOf(iChannelID))) {
+                refresh();
+            }
         }
     };
 
@@ -93,35 +103,40 @@ public class MessageFragment extends Fragment
     //getMessages
     @Override
     public void onCompleted(String response) {
-        if (response.contains("messages")) {
-            final MessageResponse messageResponse = ParseGson.parseGson(MessageResponse.class, response);
-            // Attach the adapter to a ListView
-            lv_channel_messages.setAdapter(new ListViewAdapterForMessage(this.getContext(), messageResponse.getMessages()));
-            lv_channel_messages.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                    final CharSequence[] items = {
-                            getString(R.string.locate_on_map)
-                    };
+        try {
+            if (response.contains("messages")) {
+                final MessageResponse messageResponse = ParseGson.parseGson(MessageResponse.class, response);
+                // Attach the adapter to a ListView
+                lv_channel_messages.setAdapter(new ListViewAdapterForMessage(this.getContext(), messageResponse.getMessages()));
+                lv_channel_messages.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                        final CharSequence[] items = {
+                                getString(R.string.locate_on_map)
+                        };
 
-                    new AlertDialog.Builder(getActivity())
-                            .setIcon(android.R.drawable.ic_dialog_alert)
-                            .setTitle(R.string.make_a_choice)
-                            .setItems(items, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    if (0 == which) { // first Item
-                                        Message myMessage = messageResponse.getMessages()
-                                                .get(position);
-                                        startMapsActivity(myMessage);
+                        new AlertDialog.Builder(getActivity())
+                                .setIcon(android.R.drawable.ic_dialog_alert)
+                                .setTitle(R.string.make_a_choice)
+                                .setItems(items, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        if (0 == which) { // first Item
+                                            Message myMessage = messageResponse.getMessages()
+                                                    .get(position);
+                                            startMapsActivity(myMessage);
+                                        }
                                     }
-                                }
-                            })
-                            .show();
-                }
-            });
-        } else {
-            et_message_writting.setText("");
+                                })
+                                .show();
+                    }
+                });
+            } else {
+                et_message_writting.setText("");
+            }
+        } catch (Exception e) {
+//            e.printStackTrace();
+            Toast.makeText(getContext(), "No internet connection", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -136,7 +151,6 @@ public class MessageFragment extends Fragment
             params.put("latitude", ""+mLocation.getLatitude());
             params.put("longitude", "" + mLocation.getLongitude());
         }
-
         try {
             ConnexionAsync conn = new ConnexionAsync(method, params);
             conn.setRequestListener(this);
@@ -164,6 +178,7 @@ public class MessageFragment extends Fragment
         myMapsActivity.putExtra("latitude", msg.getLatitude().toString());
         myMapsActivity.putExtra("longitude", msg.getLongitude().toString());
         myMapsActivity.putExtra("message", msg.getMessage());
+        myMapsActivity.putExtra("username", msg.getUsername());
         startActivity(myMapsActivity);
     }
 
@@ -172,6 +187,13 @@ public class MessageFragment extends Fragment
     public void onResume() {
         super.onResume();
         IntentFilter filter = new IntentFilter("com.google.android.c2dm.intent.RECEIVE");
+        filter.setPriority(IntentFilter.SYSTEM_HIGH_PRIORITY);
         getContext().registerReceiver(mMessageReceiver, filter);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        getContext().unregisterReceiver(mMessageReceiver);
     }
 }

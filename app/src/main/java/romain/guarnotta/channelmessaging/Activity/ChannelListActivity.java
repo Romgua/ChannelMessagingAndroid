@@ -84,12 +84,13 @@ public class ChannelListActivity extends GPSActivity
         ChannelListFragment channelListFragment = (ChannelListFragment)getSupportFragmentManager().findFragmentById(R.id.channel_list_fragment_id);
         MessageFragment messageFragment = (MessageFragment)getSupportFragmentManager().findFragmentById(R.id.message_fragment_id);
 
+        int channelID = channel.getChannelID();
         if (messageFragment == null || !messageFragment.isInLayout()) {
             Intent i = new Intent(this, MessageActivity.class);
-            i.putExtra("channelID", channel.getChannelID());
+            i.putExtra("channelID", channelID);
             startActivity(i);
         } else {
-            messageFragment.iChannelID = channel.getChannelID();
+            messageFragment.iChannelID = channelID;
             messageFragment.refresh();
         }
     }

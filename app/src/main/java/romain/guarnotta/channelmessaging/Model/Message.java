@@ -5,6 +5,7 @@ package romain.guarnotta.channelmessaging.Model;
  */
 public class Message {
     private int userID = 0;
+    private String username = "";
     private String message = "";
     private String date = "";
     private String imageUrl = "";
@@ -14,6 +15,8 @@ public class Message {
     public int getUserID() { return userID; }
 
     public String getMessage() { return message; }
+
+    public String getUsername() { return username; }
 
     public String getDate() { return date; }
 
