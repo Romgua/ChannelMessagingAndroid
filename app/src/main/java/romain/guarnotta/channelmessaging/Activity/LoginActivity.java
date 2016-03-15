@@ -93,14 +93,18 @@ public class LoginActivity extends NotificationActivity
 
     public static void logOut() {
         ParseGson.removePreferencesByKey(LoginActivity.getAppContext(), "accesstoken");
-        ParseGson.removePreferencesByKey(LoginActivity.getAppContext(), "username");
-        ParseGson.removePreferencesByKey(LoginActivity.getAppContext(), "password");
         ParseGson.removePreferencesByKey(LoginActivity.getAppContext(), "registrationid");
     }
 
     private void startChannelListActivity(){
         Intent myChannelListActivity =
                 new Intent(this, ChannelListActivity.class);
+
+        if (getIntent().getAction().equals("showByNotification")) {
+            String channelID = getIntent().getStringExtra("channelid");
+            myChannelListActivity.putExtra("channelID", channelID);
+        }
+
         startActivity(myChannelListActivity);
     }
 
@@ -113,11 +117,13 @@ public class LoginActivity extends NotificationActivity
     @Override
     public void onCompleted(String response) {
         try {
+            // checked accesstoken but is not ok
             if (isCheckAccesstokenValid && !ParseGson.getCode(response).equals("200")) {
                 Toast.makeText(this,
                         "Please enter your identifier to login",
                         Toast.LENGTH_LONG).show();
             } else {
+                // no cheched accesstoken
                 if (!isCheckAccesstokenValid) {
                     ParseGson.stockAccessTokenToPrefsFile(this, response);
                     ParseGson.stockPreferences(this, "registrationid", getRegistrationId());

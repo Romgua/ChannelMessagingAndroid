@@ -36,8 +36,8 @@ public class GCMBroadcastReceiver extends BroadcastReceiver {
 
     public void showNotification(Context context, String message, String channelID, String username) {
         Intent intentStreamingUI = new Intent(context, LoginActivity.class);
-//        intentStreamingUI.setAction(MY_CUSTOM_ACTION);
-//        intentStreamingUI.putExtra(EXTRA_MY_EXTRA,someExtraData);
+        intentStreamingUI.setAction("showByNotification");
+        intentStreamingUI.putExtra("channelid", channelID);
         intentStreamingUI.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB){
             intentStreamingUI.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);

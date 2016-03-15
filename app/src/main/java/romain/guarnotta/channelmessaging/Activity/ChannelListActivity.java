@@ -28,6 +28,13 @@ public class ChannelListActivity extends GPSActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_channel);
+
+        String channelID = getIntent().getStringExtra("channelID");
+        if (channelID != null) {
+            Channel channel = new Channel();
+            channel.setChannelID(Integer.valueOf(channelID));
+            goToMessageFragment(channel);
+        }
     }
 
     @Override
@@ -82,6 +89,11 @@ public class ChannelListActivity extends GPSActivity
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Channel channel = (Channel)view.getTag();
         ChannelListFragment channelListFragment = (ChannelListFragment)getSupportFragmentManager().findFragmentById(R.id.channel_list_fragment_id);
+
+        goToMessageFragment(channel);
+    }
+
+    public void goToMessageFragment(Channel channel) {
         MessageFragment messageFragment = (MessageFragment)getSupportFragmentManager().findFragmentById(R.id.message_fragment_id);
 
         int channelID = channel.getChannelID();
