@@ -31,6 +31,12 @@ public class ParseGson<T> {
         stockPreferences(myContext, "accesstoken", connectResponse.getAccesstoken());
     }
 
+    public static String getCode(String response) {
+        ConnectResponse connectResponse = parseGson(ConnectResponse.class, response);
+
+        return connectResponse.getCode();
+    }
+
     public static void stockPreferences(Context myContext, String key, String value) {
         SharedPreferences settings = myContext.getSharedPreferences(PREFS_NAME, 0);
         SharedPreferences.Editor editor = settings.edit();

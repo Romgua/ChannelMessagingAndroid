@@ -23,6 +23,9 @@ public class LoginActivity extends NotificationActivity
     private static Context context;
     private EditText et_id;
     private EditText et_password;
+    private String action = "";
+    private SharedPreferences settings;
+    private Boolean isCheckAccesstokenValid = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +33,7 @@ public class LoginActivity extends NotificationActivity
         context = getApplicationContext();
         setContentView(R.layout.content_login);
 
-        SharedPreferences settings = this.getSharedPreferences(ParseGson.PREFS_NAME, 0);
+        settings = this.getSharedPreferences(ParseGson.PREFS_NAME, 0);
 
         Button btn_connexion;
         et_id = (EditText)findViewById(R.id.et_id);
@@ -38,11 +41,13 @@ public class LoginActivity extends NotificationActivity
         btn_connexion = (Button) findViewById(R.id.btn_connexion);
         btn_connexion.setOnClickListener(this);
 
-        if (!ParseGson.getInfoInPrefsFileByKey(settings, "accesstoken").equalsIgnoreCase("error")) {
-            et_id.setText(ParseGson.getInfoInPrefsFileByKey(settings, "username"));
-            et_password.setText(ParseGson.getInfoInPrefsFileByKey(settings, "password"));
-            logIn();
-        }
+        isAccesstokenValid();
+
+//        if (!ParseGson.getInfoInPrefsFileByKey(settings, "accesstoken").equalsIgnoreCase("error")) {
+//            et_id.setText(ParseGson.getInfoInPrefsFileByKey(settings, "username"));
+//            et_password.setText(ParseGson.getInfoInPrefsFileByKey(settings, "password"));
+//            logIn();
+//        }
     }
 
     @Override
@@ -51,15 +56,39 @@ public class LoginActivity extends NotificationActivity
     }
 
     private void logIn() {
-        String method = "connect";
-        HashMap<String, String> params = new HashMap<>();
-        params.put("username", et_id.getText().toString());
-        params.put("password", et_password.getText().toString());
-        params.put("registrationid", getRegistrationId());
+        try {
+            String method = "connect";
+            HashMap<String, String> params = new HashMap<>();
+            params.put("username", et_id.getText().toString());
+            params.put("password", et_password.getText().toString());
+            params.put("registrationid", getRegistrationId());
 
-        ConnexionAsync conn = new ConnexionAsync(method, params);
-        conn.setRequestListener(this);
-        conn.execute();
+            ConnexionAsync conn = new ConnexionAsync(method, params);
+            conn.setRequestListener(this);
+            conn.execute();
+        } catch (Exception e) {
+            Toast.makeText(this, "No internet connection", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void isAccesstokenValid() {
+        if (!ParseGson.getInfoInPrefsFileByKey(settings, "accesstoken").equalsIgnoreCase("error")) {
+            try {
+                isCheckAccesstokenValid = true;
+
+                String method = "isaccesstokenvalid";
+                HashMap<String, String> params = new HashMap<>();
+                params.put("accesstoken", ParseGson.getInfoInPrefsFileByKey(settings, "accesstoken"));
+
+                ConnexionAsync conn = new ConnexionAsync(method, params);
+                conn.setRequestListener(this);
+                conn.execute();
+            } catch (Exception e) {
+                Toast.makeText(this, "No internet connection", Toast.LENGTH_LONG).show();
+            }
+        } else {
+            isCheckAccesstokenValid = false;
+        }
     }
 
     public static void logOut() {
@@ -78,17 +107,23 @@ public class LoginActivity extends NotificationActivity
     @Override
     public void onError(String error) {
         Toast.makeText(getApplicationContext(),
-                "Error connection : "+error, Toast.LENGTH_LONG).show();
+                "Please enter your identifier to login", Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onCompleted(String response) {
         try {
-            ParseGson.stockAccessTokenToPrefsFile(this, response);
-            ParseGson.stockPreferences(this, "username", et_id.getText().toString());
-            ParseGson.stockPreferences(this, "password", et_password.getText().toString());
-            ParseGson.stockPreferences(this, "registrationid", getRegistrationId());
-            startChannelListActivity();
+            if (isCheckAccesstokenValid && !ParseGson.getCode(response).equals("200")) {
+                Toast.makeText(this,
+                        "Please enter your identifier to login",
+                        Toast.LENGTH_LONG).show();
+            } else {
+                if (!isCheckAccesstokenValid) {
+                    ParseGson.stockAccessTokenToPrefsFile(this, response);
+                    ParseGson.stockPreferences(this, "registrationid", getRegistrationId());
+                }
+                startChannelListActivity();
+            }
         } catch (ConnectException ex) {
             onError(ex.getMessage());
         }

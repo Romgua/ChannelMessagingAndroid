@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
+import android.text.Html;
 
 import java.util.Set;
 
@@ -44,9 +45,10 @@ public class GCMBroadcastReceiver extends BroadcastReceiver {
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0,
                 intentStreamingUI,
                 PendingIntent.FLAG_CANCEL_CURRENT);
+        String usernameBold = Html.fromHtml("<b>" + username+" : </b>").toString();
         NotificationCompat.Builder noti = new NotificationCompat.Builder(context)
                 .setContentTitle("Channel "+channelID)
-                .setContentText(username+" : "+message)
+                .setContentText(usernameBold+message)
                 .setVibrate(new long[]{0, 100, 100, 100, 100, 250, 200, 250, 100, 100, 100, 100, 100, 100})
                         //Set the color of the notification led (example on Nexus 5)
                 .setLights(Color.parseColor("#006ab9"), 2000, 1000)
