@@ -1,4 +1,4 @@
-package romain.guarnotta.channelmessaging.Network_Manager;
+package romain.guarnotta.channelmessaging.NetworkManager;
 
 import android.os.AsyncTask;
 import java.io.BufferedReader;

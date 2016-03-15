@@ -1,12 +1,9 @@
 package romain.guarnotta.channelmessaging.Activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,10 +12,10 @@ import android.widget.Toast;
 import java.net.ConnectException;
 import java.util.HashMap;
 
-import romain.guarnotta.channelmessaging.Network_Manager.ConnexionAsync;
-import romain.guarnotta.channelmessaging.Network_Manager.ParseGson;
+import romain.guarnotta.channelmessaging.NetworkManager.ConnexionAsync;
+import romain.guarnotta.channelmessaging.NetworkManager.ParseGson;
 import romain.guarnotta.channelmessaging.R;
-import romain.guarnotta.channelmessaging.Network_Manager.RequestListener;
+import romain.guarnotta.channelmessaging.NetworkManager.RequestListener;
 
 public class LoginActivity extends NotificationActivity
         implements View.OnClickListener, RequestListener {

@@ -8,10 +8,8 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,19 +19,16 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import org.json.JSONException;
-
 import java.util.HashMap;
-import java.util.Set;
 
 import romain.guarnotta.channelmessaging.Activity.GPSActivity;
 import romain.guarnotta.channelmessaging.Activity.MapsActivity;
 import romain.guarnotta.channelmessaging.Helper.ListViewAdapterForMessage;
 import romain.guarnotta.channelmessaging.Model.Message;
 import romain.guarnotta.channelmessaging.Model.MessageResponse;
-import romain.guarnotta.channelmessaging.Network_Manager.ConnexionAsync;
-import romain.guarnotta.channelmessaging.Network_Manager.ParseGson;
-import romain.guarnotta.channelmessaging.Network_Manager.RequestListener;
+import romain.guarnotta.channelmessaging.NetworkManager.ConnexionAsync;
+import romain.guarnotta.channelmessaging.NetworkManager.ParseGson;
+import romain.guarnotta.channelmessaging.NetworkManager.RequestListener;
 import romain.guarnotta.channelmessaging.R;
 
 /**
@@ -51,7 +46,6 @@ public class MessageFragment extends Fragment
         @Override
         public void onReceive(Context context, Intent intent) {
             abortBroadcast();
-            Set<String> list = intent.getExtras().keySet();
 
             String sChannelID = intent.getStringExtra("channelid");
             if (sChannelID.equals(String.valueOf(iChannelID))) {

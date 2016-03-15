@@ -40,7 +40,7 @@ public class GPSActivity extends AppCompatActivity
     //GoogleApiClient.OnConnectionFailedListener
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        Toast.makeText(this, connectionResult.getErrorMessage(), Toast.LENGTH_LONG).show();
+        Toast.makeText(this, connectionResult.getErrorCode(), Toast.LENGTH_LONG).show();
     }
 
     //this

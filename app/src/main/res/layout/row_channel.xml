@@ -9,11 +9,16 @@
         android:id="@+id/tv_title_channel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingLeft="10sp"
+        android:paddingTop="10sp"
         android:textSize="16sp"
         android:textStyle="bold"
         android:textColor="@android:color/black"/>
     <TextView
         android:id="@+id/tv_connectusers"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:paddingLeft="10sp"
+        android:paddingBottom="10sp"
+        />
 </LinearLayout>

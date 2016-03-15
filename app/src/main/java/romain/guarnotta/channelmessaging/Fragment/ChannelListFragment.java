@@ -7,9 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.HashMap;
 import java.util.List;
@@ -19,9 +17,9 @@ import romain.guarnotta.channelmessaging.Activity.MessageActivity;
 import romain.guarnotta.channelmessaging.Helper.ListViewAdapterForChannel;
 import romain.guarnotta.channelmessaging.Model.Channel;
 import romain.guarnotta.channelmessaging.Model.ChannelResponse;
-import romain.guarnotta.channelmessaging.Network_Manager.ConnexionAsync;
-import romain.guarnotta.channelmessaging.Network_Manager.ParseGson;
-import romain.guarnotta.channelmessaging.Network_Manager.RequestListener;
+import romain.guarnotta.channelmessaging.NetworkManager.ConnexionAsync;
+import romain.guarnotta.channelmessaging.NetworkManager.ParseGson;
+import romain.guarnotta.channelmessaging.NetworkManager.RequestListener;
 import romain.guarnotta.channelmessaging.R;
 
 /**

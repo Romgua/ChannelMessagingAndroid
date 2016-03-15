@@ -1,4 +1,4 @@
-package romain.guarnotta.channelmessaging.Activity;
+package romain.guarnotta.channelmessaging;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -8,13 +8,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
-import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 
 import java.util.Set;
 
-import romain.guarnotta.channelmessaging.R;
+import romain.guarnotta.channelmessaging.Activity.LoginActivity;
 
 public class GCMBroadcastReceiver extends BroadcastReceiver {
     private static final int UNIQUE_ID = 1;
@@ -30,12 +28,12 @@ public class GCMBroadcastReceiver extends BroadcastReceiver {
         if (list.contains("message") && list.contains("channelid") && list.contains("fromUser")) {
             showNotification(context,
                     intent.getStringExtra("message"),
-                    intent.getIntExtra("channelID", 0),
-                    intent.getStringExtra("username"));
+                    intent.getStringExtra("channelid"),
+                    intent.getStringExtra("fromUser"));
         }
     }
 
-    public void showNotification(Context context, String message, Integer channelID, String username) {
+    public void showNotification(Context context, String message, String channelID, String username) {
         Intent intentStreamingUI = new Intent(context, LoginActivity.class);
 //        intentStreamingUI.setAction(MY_CUSTOM_ACTION);
 //        intentStreamingUI.putExtra(EXTRA_MY_EXTRA,someExtraData);
@@ -47,8 +45,8 @@ public class GCMBroadcastReceiver extends BroadcastReceiver {
                 intentStreamingUI,
                 PendingIntent.FLAG_CANCEL_CURRENT);
         NotificationCompat.Builder noti = new NotificationCompat.Builder(context)
-                .setContentTitle("Message from "+username)
-                .setContentText(message)
+                .setContentTitle("Channel "+channelID)
+                .setContentText(username+" : "+message)
                 .setVibrate(new long[]{0, 100, 100, 100, 100, 250, 200, 250, 100, 100, 100, 100, 100, 100})
                         //Set the color of the notification led (example on Nexus 5)
                 .setLights(Color.parseColor("#006ab9"), 2000, 1000)
@@ -60,12 +58,9 @@ public class GCMBroadcastReceiver extends BroadcastReceiver {
         NotificationCompat.InboxStyle inboxStyle =
                 new NotificationCompat.InboxStyle();
         // Sets a title for the Inbox in expanded layout
-        inboxStyle.setBigContentTitle("My Big Content Title");
+        inboxStyle.setBigContentTitle(("Channel " + channelID));
         // Moves events into the expanded layout
-        inboxStyle.addLine("My Long Text");
-        inboxStyle.addLine("My Long Text");
-        inboxStyle.addLine("My Long Text");
-        inboxStyle.addLine("My Long Text");
+        inboxStyle.addLine(username+" : "+message);
         // Moves the expanded layout object into the notification object.
         noti.setStyle(inboxStyle);
         Notification notification = noti.build();

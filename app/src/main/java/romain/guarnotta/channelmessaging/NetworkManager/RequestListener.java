@@ -1,4 +1,4 @@
-package romain.guarnotta.channelmessaging.Network_Manager;
+package romain.guarnotta.channelmessaging.NetworkManager;
 
 /**
  * Created by romain on 08/02/16.
