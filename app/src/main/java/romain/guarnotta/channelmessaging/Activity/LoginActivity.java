@@ -42,17 +42,19 @@ public class LoginActivity extends NotificationActivity
         btn_connexion.setOnClickListener(this);
 
         isAccesstokenValid();
-
-//        if (!ParseGson.getInfoInPrefsFileByKey(settings, "accesstoken").equalsIgnoreCase("error")) {
-//            et_id.setText(ParseGson.getInfoInPrefsFileByKey(settings, "username"));
-//            et_password.setText(ParseGson.getInfoInPrefsFileByKey(settings, "password"));
-//            logIn();
-//        }
     }
 
     @Override
     public void onClick(View v) {
-        logIn();
+        if (et_id.getText().toString().equals("") && et_password.getText().toString().equals("")) {
+            onError("Please enter your login and password");
+        } else if (et_id.getText().toString().equals("")) {
+            onError("Please enter your login");
+        } else if (et_password.getText().toString().equals("")) {
+            onError("Please enter your password");
+        } else {
+            logIn();
+        }
     }
 
     private void logIn() {
@@ -111,7 +113,7 @@ public class LoginActivity extends NotificationActivity
     @Override
     public void onError(String error) {
         Toast.makeText(getApplicationContext(),
-                "Please enter your identifier to login", Toast.LENGTH_LONG).show();
+                error, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -120,7 +122,7 @@ public class LoginActivity extends NotificationActivity
             // checked accesstoken but is not ok
             if (isCheckAccesstokenValid && !ParseGson.getCode(response).equals("200")) {
                 Toast.makeText(this,
-                        "Please enter your identifier to login",
+                        "Error connection",
                         Toast.LENGTH_LONG).show();
             } else {
                 // no cheched accesstoken

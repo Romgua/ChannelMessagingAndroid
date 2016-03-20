@@ -17,7 +17,6 @@
         android:focusableInTouchMode="true"
         android:layout_width="0px"
         android:layout_height="0px"/>
-
     <LinearLayout
         android:id="@+id/ll_messages"
         android:orientation="horizontal"
@@ -27,21 +26,30 @@
         <EditText
             android:id="@+id/et_message_writting"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="4"/>
-        <Button
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:layout_marginTop="12sp"
+            android:textColor="@color/myCustomDarkGreen"/>
+        <ImageButton
             android:id="@+id/btn_send_message"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/btn_send"/>
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_send"
+            android:layout_marginTop="10sp"
+            android:layout_marginLeft="10sp"
+            android:background="@null"/>
     </LinearLayout>
-
     <ListView
         android:id="@+id/lv_channel_messages"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/ll_messages">
-
-    </ListView>
+        android:layout_above="@id/ll_messages"/>
+    <View
+        android:id="@id/v_separate_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/myCustomGreen"
+        android:layout_below="@id/lv_channel_messages"
+        android:layout_marginTop="5sp"/>
 
 </RelativeLayout>

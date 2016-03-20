@@ -20,21 +20,50 @@
         android:layout_height="0px"/>
 
     <LinearLayout
+        android:id="@+id/ll_icon"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10sp">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_channelmessaging"/>
+        <TextView
+            android:id="@+id/tv_catchphrase"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/catchphrase"
+            android:textAlignment="center"
+            android:textSize="16sp"
+            android:paddingTop="30sp"/>
+    </LinearLayout>
+    <View
+        android:id="@+id/v_separate_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_margin="10sp"
+        android:background="@color/myCustomGreen"
+        android:layout_below="@id/ll_icon"/>
+    <LinearLayout
         android:id="@+id/ll_id"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@id/v_separate_line">
         <TextView
             android:id="@+id/tv_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/tv_id"
-            android:layout_weight="6"/>
+            android:layout_weight="6"
+            android:textColor="@color/myCustomDarkGreen"/>
         <EditText
             android:id="@+id/et_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="4"/>
+            android:layout_weight="4"
+            android:textColor="@color/myCustomDarkGreen"/>
     </LinearLayout>
     <LinearLayout
         android:id="@+id/ll_password"
@@ -47,20 +76,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/tv_password"
-            android:layout_weight="6"/>
+            android:layout_weight="6"
+            android:textColor="@color/myCustomDarkGreen"/>
         <EditText
             android:id="@+id/et_password"
             android:inputType="textPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="4"/>
+            android:layout_weight="4"
+            android:textColor="@color/myCustomDarkGreen"/>
     </LinearLayout>
     <Button
         android:id="@+id/btn_connexion"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/btn_connexion"
+        android:textColor="@android:color/white"
         android:layout_below="@id/ll_password"
         android:layout_marginTop="30sp"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/button"/>
 </RelativeLayout>

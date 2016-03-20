@@ -16,6 +16,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -63,9 +65,9 @@ public class MessageFragment extends Fragment
         settings = getContext().getSharedPreferences(ParseGson.PREFS_NAME, 0);
         iChannelID = getActivity().getIntent().getIntExtra("channelID", 0);
 
-        Button btn_send_message;
+        ImageButton btn_send_message;
         et_message_writting = (EditText)v.findViewById(R.id.et_message_writting);
-        btn_send_message = (Button)v.findViewById(R.id.btn_send_message);
+        btn_send_message = (ImageButton)v.findViewById(R.id.btn_send_message);
         btn_send_message.setOnClickListener(this);
 
         return v;
@@ -167,13 +169,17 @@ public class MessageFragment extends Fragment
 
     //this
     private void startMapsActivity(Message msg){
-        Intent myMapsActivity =
-                new Intent(getContext(), MapsActivity.class);
-        myMapsActivity.putExtra("latitude", msg.getLatitude().toString());
-        myMapsActivity.putExtra("longitude", msg.getLongitude().toString());
-        myMapsActivity.putExtra("message", msg.getMessage());
-        myMapsActivity.putExtra("username", msg.getUsername());
-        startActivity(myMapsActivity);
+        try {
+            Intent myMapsActivity =
+                    new Intent(getContext(), MapsActivity.class);
+            myMapsActivity.putExtra("latitude", msg.getLatitude().toString());
+            myMapsActivity.putExtra("longitude", msg.getLongitude().toString());
+            myMapsActivity.putExtra("message", msg.getMessage());
+            myMapsActivity.putExtra("username", msg.getUsername());
+            startActivity(myMapsActivity);
+        } catch (Exception e) {
+            Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+        }
     }
 
     //this

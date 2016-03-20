@@ -88,13 +88,12 @@ public class ChannelListActivity extends GPSActivity
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Channel channel = (Channel)view.getTag();
-        ChannelListFragment channelListFragment = (ChannelListFragment)getSupportFragmentManager().findFragmentById(R.id.channel_list_fragment_id);
-
         goToMessageFragment(channel);
     }
 
     public void goToMessageFragment(Channel channel) {
-        MessageFragment messageFragment = (MessageFragment)getSupportFragmentManager().findFragmentById(R.id.message_fragment_id);
+        MessageFragment messageFragment = (MessageFragment)getSupportFragmentManager()
+                .findFragmentById(R.id.message_fragment_id);
 
         int channelID = channel.getChannelID();
         if (messageFragment == null || !messageFragment.isInLayout()) {
@@ -129,7 +128,8 @@ public class ChannelListActivity extends GPSActivity
 
     @Override
     public void setDefaultChannel(int channelID) {
-        MessageFragment messageFragment = (MessageFragment)getSupportFragmentManager().findFragmentById(R.id.message_fragment_id);
+        MessageFragment messageFragment = (MessageFragment)getSupportFragmentManager()
+                .findFragmentById(R.id.message_fragment_id);
         if (messageFragment != null && messageFragment.isInLayout()) {
             messageFragment.iChannelID = channelID;
             messageFragment.refresh();

@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.HashMap;
 import java.util.List;
@@ -38,14 +39,17 @@ public class ChannelListFragment extends Fragment implements RequestListener {
         lv_channel_list.setOnItemClickListener((ChannelListActivity)getActivity());
         SharedPreferences settings = getContext().getSharedPreferences(ParseGson.PREFS_NAME, 0);
 
-        String method = "getchannels";
-        HashMap<String, String> params = new HashMap<>();
-        params.put("accesstoken", ParseGson.getInfoInPrefsFileByKey(settings, "accesstoken"));
+        try {
+            String method = "getchannels";
+            HashMap<String, String> params = new HashMap<>();
+            params.put("accesstoken", ParseGson.getInfoInPrefsFileByKey(settings, "accesstoken"));
 
-        ConnexionAsync conn = new ConnexionAsync(method, params);
-        conn.setRequestListener(this);
-        conn.execute();
-
+            ConnexionAsync conn = new ConnexionAsync(method, params);
+            conn.setRequestListener(this);
+            conn.execute();
+        } catch (Exception e) {
+            Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+        }
         return v;
     }
 
@@ -71,9 +75,11 @@ public class ChannelListFragment extends Fragment implements RequestListener {
     @Override
     public void onCompleted(String response) {
         ChannelResponse channelResponse = ParseGson.parseGson(ChannelResponse.class, response);
-        ((ChannelListActivity)getActivity()).setDefaultChannel(channelResponse.getChannels().get(0).getChannelID());
-        // Attach the adapter to a ListView
-        lv_channel_list.setAdapter(new ListViewAdapterForChannel(this.getContext(), channelResponse.getChannels()));
+        if (null != channelResponse.getChannels()) {
+            ((ChannelListActivity) getActivity()).setDefaultChannel(channelResponse.getChannels().get(0).getChannelID());
+            // Attach the adapter to a ListView
+            lv_channel_list.setAdapter(new ListViewAdapterForChannel(this.getContext(), channelResponse.getChannels()));
+        }
     }
 
     public void searchStringInList(String word) {
